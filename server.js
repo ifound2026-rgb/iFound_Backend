@@ -27,7 +27,9 @@ app.get('/', (req, res) => {
   res.send('Welcome to iFound Backend!');
 });
 
-// Start Server
-app.listen(5000, () => {
-  console.log("Server running on port 5000");
+// Use Render’s dynamic port or fallback to 5000 locally
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });

@@ -6,6 +6,12 @@ const cors = require('cors');
 
 const authRoutes = require('./routes/auth');
 const adminAuthRoutes = require('./routes/adminAuth');
+const lostRoutes = require('./routes/lost');
+
+// ...
+
+app.use('/api/lost', lostRoutes);
+
 
 const app = express();
 

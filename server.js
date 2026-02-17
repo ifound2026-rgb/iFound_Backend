@@ -6,16 +6,11 @@ const cors = require('cors');
 
 const authRoutes = require('./routes/auth');
 const adminAuthRoutes = require('./routes/adminAuth');
-const lostRoutes = require('./routes/lost');
+const lostRoutes = require('./routes/lost'); // ✅ only declare once
 
-// ...
+const app = express(); // ✅ declare app first
 
-app.use('/api/lost', lostRoutes);
-
-
-const app = express();
-
-// ✅ CORS Middleware: allow your frontend to access backend
+// ✅ CORS Middleware: allow frontend to access backend
 app.use(cors({
   origin: [
     'http://localhost:3000', // local dev
@@ -25,7 +20,7 @@ app.use(cors({
   credentials: true,
 }));
 
-// Parse JSON
+// ✅ Parse JSON requests
 app.use(express.json());
 
 // MongoDB Connection
@@ -36,17 +31,14 @@ mongoose.connect(process.env.MONGO_URI)
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/admin', adminAuthRoutes);
-
-// Example: if you have lost items route
-const lostRoutes = require('./routes/lost'); // make sure this file exists
-app.use('/api/lost', lostRoutes);
+app.use('/api/lost', lostRoutes); // ✅ lost route here
 
 // Root route
 app.get('/', (req, res) => {
   res.send('Welcome to iFound Backend!');
 });
 
-// Dynamic port
+// Use Render’s dynamic port or fallback to 5000 locally
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {

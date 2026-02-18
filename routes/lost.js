@@ -1,16 +1,16 @@
 const express = require('express');
 const router = express.Router();
-const LostItem = require('../models/LostItems'); // adjust path if needed
+const LostItem = require('../models/LostItems'); // make sure the path is correct
 
 // POST /api/lost
 router.post('/', async (req, res) => {
   try {
-    const newLostItem = new LostItem(req.body);
-    const savedItem = await newLostItem.save();
-    res.status(201).json(savedItem);
+    const lostItem = new LostItem(req.body); // create a new lost item from JSON
+    const savedItem = await lostItem.save(); // save to MongoDB
+    res.status(201).json(savedItem); // return the saved object
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Failed to save lost item', error: err.message });
+    console.error(err); // log error in backend console
+    res.status(500).json({ message: 'Server Error' });
   }
 });
 
